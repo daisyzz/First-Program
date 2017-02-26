@@ -33,6 +33,7 @@ def script():
                     left = left + letter
             hint = input("Would you like a hint Y/N: ").lower()
             if hint == "y":
+                chances = (chances - 1)
                 print("The hint is '{}'".format(random.choice(left)))
         elif guess in word and guess not in guesses:
             """checks how many (guess) are in (word) and adds to (guesses)"""
