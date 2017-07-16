@@ -8,6 +8,7 @@ if choice == 24:
     for i in time_24:
         if i.isdigit() is True:
             m_time.append(i)
+
 elif choice == 12:
     time_12 = str(input("Please input 12H clock to convert to military : "))
     for l in time_12:
@@ -18,12 +19,14 @@ elif choice == 12:
         elif l is "p":
             for i in time_12:
                 if i.isdigit() is True:
-                    i = int(i)
                     m_time.append(i)
-            if len(m_time) == 4:
+            if m_time[0] == 0:
                 m_time.remove(0)
-            m_time[0] += 12
-if len(m_time) == 4 is False:
+            if len(m_time) == 4:
+                fix = int("".join(m_time[0:2]))
+                fix += 12
+                m_time[0:2] = str(fix)
+if len(m_time) != 4:
     m_time.insert(0, '0')
 m_time = map(str, m_time)
 m_time = "".join(m_time)
