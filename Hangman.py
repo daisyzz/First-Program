@@ -1,59 +1,69 @@
 import random
 import time
 
+words = ["airplane", "pizza", "grandma", "mother", "flags", "countries"]
 
-def main():
-    # List of word's to use.
-    words = ['pizza', 'love', 'life', 'amaizing', 'china', 'phone', 'color', 'chicken']
-    # Choice's from the list above at random.
-    word = (random.choice(words))
-    # Prints the length of the word too guess.
-    print("The word im thinking about is {} letter's long".format(len(word)))
-    # Chances
-    chances = 10
-    # Where the incorrect guess is stored.
-    done = []
-    # Where the correct guess is stored.
-    letters = []
-    # Loops untill ......
-    while chances > 0 and len(word) != len(letters):
-        # Ask's the user for his guess.
-        guess = str(input("Please input your guess: ")).lower()
-        # Check's if the guess is in word and if not already in letters.
-        if guess in word and guess not in letters:
-            # Finds the letter's from guess in word.
+print("Welcome to HangMan by Owen!")
+print("When stuck use 'HELP!' :)")
+
+
+def main(lives, helps):
+    if len(words) < 1:
+        print("You tried all of our word's congrats!!!!!")
+        print("Exiting in 10 second's! Thank you for playing")
+        time.sleep(10)
+        quit()
+
+    word = random.choice(words).lower()
+    words.remove(word)
+    correct = []
+    wrong = []
+    left = []
+
+    for h in word:
+        left.append(h)
+
+    while lives > 0 and len(correct) != len(word):
+        guess = input("Guess a letter: ").lower()
+
+        if guess == "help!" and helps > 0:
+            choice = input("Would you like to sacrifice a life for a letter 'Only one use per word' Y/N: ").lower()
+            if choice == "y":
+                stuck = random.choice(left)
+                helps -= 1
+                lives -= 1
+                print("Your letter is '{}' and are left with {} {}".format(stuck, lives, "lives" if lives > 1 else "life"))
+                continue
+            else:
+                continue
+
+        if guess.isdigit() or len(guess) != 1:
+            print("Only a letter guess.")
+            continue
+
+        if guess in correct or guess in wrong:
+            print("You've already tried '{}', and it was {}!".format(guess, "correct" if guess in correct else"wrong"))
+        elif guess in word:
             for i in word:
-                # Make's i equal too guess.
-                if i == guess:
-                    letters.append(i)
-                # Prints guessed letters in . else "-".
-                print("{}".format(i if i in letters else "-"), end="")
+                if i in guess:
+                    correct.append(i)
+                    left.remove(i)
+                print("{} ".format(i if i in correct else"_"), end="")
             print()
-        # Check's if guess in done then print's.
-        elif guess in done:
-            print("You Guessed that already")
-        # Check's if guess not in word.
-        elif guess not in word:
-            # Adds the incorrect guess into done.
-            done.append(guess)
-            # Subtracts chances by 1.
-            chances -= 1
-            # Print's.
-            print("You guessed wrong and have {} chance's left".format(chances))
-    # Check's if chances are equal to 0 then print's.
-    if chances == 0:
-        print("You Lost")
-    # If above is false print's......
+        else:
+            print("Nope, There's no '{}' in it!".format(guess))
+            wrong.append(guess)
+            lives -= 1
+            print("You have {} {} left!".format(lives, "lives" if lives > 1 else "life"))
+    if lives < 1:
+        print("You Lost! it was {}".format(word))
     else:
-        print("YOU WON!!!!!!!!!!!")
-    # Ask's user if he would like to replay.
-    replay = input("Please enter y to play again: ").lower()
-    # Check's if replay is equal to y
-    if replay == "y":
-        print("Enjoy!")
-        time.sleep(2.5)
-        main()
-    # If everything above false it break's
+        print("You Won!!!!")
+    restart = input("Would you like a new word Y/N: ").lower()
+
+    if restart == "y":
+        main(5, 1)
     else:
-        print("Bye!")
-main()
+        print("Exiting in 10 second's! Thank you for playing")
+        time.sleep(10)
+main(5, 1)
