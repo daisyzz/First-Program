@@ -18,11 +18,11 @@ quit - exit the game""")
         time.sleep(10)
         quit()
     command = input(">").lower()
-    if command == 'start':
+    if command == commands[0]:
         main(3)
-    elif command == 'easy':
+    elif command == commands[1]:
         main(6)
-    elif command == 'quit':
+    elif command == commands[2]:
         quit()
     else:
         print("I don't understand")
