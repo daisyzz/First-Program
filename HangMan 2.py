@@ -26,7 +26,7 @@ quit - exit the game""")
         quit()
     else:
         print("I don't understand")
-
+        start()
 
 def main(lives):
     word = random.choice(words)
