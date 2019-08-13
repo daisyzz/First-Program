@@ -18,7 +18,6 @@ quit - exit the game""")
         time.sleep(10)
         quit()
     command = input(">").lower()
-
     if command == 'start':
         main(3)
     elif command == 'easy':
@@ -51,7 +50,7 @@ def main(lives):
         else:
             lives -= 1
             wrong_guess += player_input
-            print(f"You guess is wrong and now have {lives} {'lives' if lives > 1 else 'life'} left.")
+            print(f"You guess is wrong and now have {lives} {'life' if lives == 1 else 'lives'} left.")
     print(f"You {'won' if lives > 1 else 'lost'} with {lives} {'life' if lives == 1 else 'lives'} left")
     start()
 
